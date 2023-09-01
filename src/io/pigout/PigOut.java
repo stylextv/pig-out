@@ -11,9 +11,8 @@ public class PigOut {
 	private static final int UPDATE_STATE_ITERATION_AMOUNT = 100;
 	private static final double ALWAYS_LOSING_WINNING_PROBABILITY = 0;
 	private static final double ALWAYS_WINNING_WINNING_PROBABILITY = 1;
-	private static final double DEFAULT_WINNING_PROBABILITY = ALWAYS_LOSING_WINNING_PROBABILITY;
 	
-	private static final Double[][][] winningProbabilities = new Double[WINNING_SCORE + 1][WINNING_SCORE + 1][WINNING_SCORE + 1];
+	private static final double[][][] winningProbabilities = new double[WINNING_SCORE + 1][WINNING_SCORE + 1][WINNING_SCORE + 1];
 	private static final Action[][][] bestActions = new Action[WINNING_SCORE + 1][WINNING_SCORE + 1][WINNING_SCORE + 1];
 	
 	static {
@@ -72,10 +71,7 @@ public class PigOut {
 		if(score + turnScore >= WINNING_SCORE) return ALWAYS_WINNING_WINNING_PROBABILITY;
 		if(opponentScore >= WINNING_SCORE) return ALWAYS_LOSING_WINNING_PROBABILITY;
 		
-		Double winningProbability = winningProbabilities[score][opponentScore][turnScore];
-		
-		if(winningProbability == null) return DEFAULT_WINNING_PROBABILITY;
-		return winningProbability;
+		return winningProbabilities[score][opponentScore][turnScore];
 	}
 	
 	private static void updateWinningProbability(int score, int opponentScore, int turnScore, double winningProbability) {
@@ -85,10 +81,7 @@ public class PigOut {
 	public static Action bestAction(int score, int opponentScore, int turnScore) {
 		if(score + turnScore >= WINNING_SCORE || opponentScore >= WINNING_SCORE) return Action.PASS;
 		
-		Action bestAction = bestActions[score][opponentScore][turnScore];
-		
-		if(bestAction == null) return Action.ROLL;
-		return bestAction;
+		return bestActions[score][opponentScore][turnScore];
 	}
 	
 	private static void updateBestAction(int score, int opponentScore, int turnScore, Action bestAction) {
