@@ -22,14 +22,14 @@ public class PigOut {
 				for(int opponentScore = WINNING_SCORE; opponentScore >= INITIAL_SCORE; opponentScore--) {
 					for(int turnScore = WINNING_SCORE; turnScore >= INITIAL_SCORE; turnScore--) {
 
-						enhanceWinningProbability(score, opponentScore, turnScore);
+						enhanceState(score, opponentScore, turnScore);
 					}
 				}
 			}
 		}
 	}
 	
-	private static void enhanceWinningProbability(int score, int opponentScore, int turnScore) {
+	private static void enhanceState(int score, int opponentScore, int turnScore) {
 		if(score + turnScore >= WINNING_SCORE) {
 			updateWinningProbability(score, opponentScore, turnScore, ALWAYS_WINNING_WINNING_PROBABILITY);
 			updateBestAction(score, opponentScore, turnScore, Action.PASS);
