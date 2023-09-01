@@ -8,7 +8,7 @@ public class PigOut {
 	private static final int HIGHEST_ROLL_SCORE = 6;
 	private static final int PIG_OUT_ROLL_SCORE = 1;
 	
-	private static final int ENHANCE_WINNING_PROBABILITIES_ITERATION_AMOUNT = 100;
+	private static final int UPDATE_STATE_ITERATION_AMOUNT = 100;
 	private static final double ALWAYS_LOSING_WINNING_PROBABILITY = 0;
 	private static final double ALWAYS_WINNING_WINNING_PROBABILITY = 1;
 	private static final double DEFAULT_WINNING_PROBABILITY = ALWAYS_LOSING_WINNING_PROBABILITY;
@@ -17,19 +17,19 @@ public class PigOut {
 	private static final Action[][][] bestActions = new Action[WINNING_SCORE + 1][WINNING_SCORE + 1][WINNING_SCORE + 1];
 	
 	static {
-		for(int i = 0; i < ENHANCE_WINNING_PROBABILITIES_ITERATION_AMOUNT; i++) {
+		for(int i = 0; i < UPDATE_STATE_ITERATION_AMOUNT; i++) {
 			for(int score = WINNING_SCORE; score >= INITIAL_SCORE; score--) {
 				for(int opponentScore = WINNING_SCORE; opponentScore >= INITIAL_SCORE; opponentScore--) {
 					for(int turnScore = WINNING_SCORE; turnScore >= INITIAL_SCORE; turnScore--) {
 
-						enhanceState(score, opponentScore, turnScore);
+						updateState(score, opponentScore, turnScore);
 					}
 				}
 			}
 		}
 	}
 	
-	private static void enhanceState(int score, int opponentScore, int turnScore) {
+	private static void updateState(int score, int opponentScore, int turnScore) {
 		if(score + turnScore >= WINNING_SCORE) {
 			updateWinningProbability(score, opponentScore, turnScore, ALWAYS_WINNING_WINNING_PROBABILITY);
 			updateBestAction(score, opponentScore, turnScore, Action.PASS);
